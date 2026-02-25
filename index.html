@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lenovo Data Analysis Agent - Product Proposal</title>
+<title>联想数据分析 Agent — 产品方案</title>
 <style>
   :root {
     --navy: #1a2332;
@@ -30,12 +30,21 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     color: var(--gray-800);
     line-height: 1.6;
     background: var(--white);
     -webkit-font-smoothing: antialiased;
   }
+
+  /* ---- LANG TOGGLE ---- */
+  .lang-btn {
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: var(--gray-300);
+    transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.15); color: var(--white); }
 
   /* ---- NAV ---- */
   nav {
@@ -53,6 +62,7 @@
     display: flex; align-items: center; gap: 10px;
   }
   .nav-logo span { color: var(--orange); }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
   .nav-links { display: flex; gap: 28px; }
   .nav-links a {
     color: var(--gray-400); text-decoration: none; font-size: 13px;
@@ -144,7 +154,6 @@
   .phase-card:nth-child(1) .phase-num { background: var(--blue); }
   .phase-card:nth-child(2) .phase-num { background: var(--orange); }
   .phase-card:nth-child(3) .phase-num { background: var(--green); }
-
   .phase-card h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
   .phase-card .phase-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; font-weight: 500; }
   .phase-card p { font-size: 14px; color: var(--gray-600); line-height: 1.7; margin-bottom: 16px; }
@@ -309,19 +318,35 @@
   footer .footer-note {
     margin-top: 20px; font-size: 12px; color: var(--gray-600);
   }
+
+  /* hide/show lang content */
+  [data-lang] { display: none; }
+  .lang-zh [data-lang="zh"] { display: inherit; }
+  .lang-en [data-lang="en"] { display: inherit; }
+  /* block-level lang elements */
+  div[data-lang], ul[data-lang], p[data-lang] { display: none; }
+  .lang-zh div[data-lang="zh"],
+  .lang-zh ul[data-lang="zh"],
+  .lang-zh p[data-lang="zh"] { display: block; }
+  .lang-en div[data-lang="en"],
+  .lang-en ul[data-lang="en"],
+  .lang-en p[data-lang="en"] { display: block; }
 </style>
 </head>
-<body>
+<body class="lang-zh">
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <div class="nav-logo">LENOVO <span>Data Analysis Agent</span></div>
-    <div class="nav-links">
-      <a href="#roadmap">Roadmap</a>
-      <a href="#security">Security</a>
-      <a href="#methodology">Methodology</a>
-      <a href="#demo">Demo</a>
+    <div class="nav-logo">LENOVO <span data-lang="zh">数据分析 Agent</span><span data-lang="en">Data Analysis Agent</span></div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#roadmap"><span data-lang="zh">路线图</span><span data-lang="en">Roadmap</span></a>
+        <a href="#security"><span data-lang="zh">安全架构</span><span data-lang="en">Security</span></a>
+        <a href="#methodology"><span data-lang="zh">技术方法论</span><span data-lang="en">Methodology</span></a>
+        <a href="#demo">Demo</a>
+      </div>
+      <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
     </div>
   </div>
 </nav>
@@ -329,15 +354,20 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-badge">Product Proposal &mdash; Data Intelligence Platform</div>
-    <h1>Let Every Business Team Have Their Own <em>Data Analyst</em></h1>
-    <p>An intelligent data analysis Agent built on Databricks, transforming natural language into trustworthy business insights with enterprise-grade security and governance.</p>
+    <div class="hero-badge">
+      <span data-lang="zh">产品方案 &mdash; 数据智能平台</span>
+      <span data-lang="en">Product Proposal &mdash; Data Intelligence Platform</span>
+    </div>
+    <h1 data-lang="zh">让每个业务团队都拥有<br>自己的<em>数据分析师</em></h1>
+    <h1 data-lang="en">Let Every Business Team Have Their Own <em>Data Analyst</em></h1>
+    <p data-lang="zh">基于 Databricks 构建的智能数据分析 Agent，将自然语言转化为可信赖的业务洞察，具备企业级安全与治理能力。</p>
+    <p data-lang="en">An intelligent data analysis Agent built on Databricks, transforming natural language into trustworthy business insights with enterprise-grade security and governance.</p>
     <div class="hero-stack">
       <div class="chip">Databricks Genie</div>
       <div class="chip">Unity Catalog</div>
       <div class="chip">Text-to-SQL</div>
       <div class="chip">Multi-Agent</div>
-      <div class="chip">Feedback Loop</div>
+      <div class="chip"><span data-lang="zh">反馈闭环</span><span data-lang="en">Feedback Loop</span></div>
     </div>
   </div>
 </section>
@@ -345,18 +375,28 @@
 <!-- ROADMAP -->
 <section class="roadmap" id="roadmap">
   <div class="container">
-    <div class="section-label">Roadmap</div>
-    <h2 class="section-title">Three-Phase Implementation</h2>
-    <p class="section-desc">A pragmatic, validation-driven approach: start with what works, learn from real usage, scale only when the data justifies it.</p>
+    <div class="section-label"><span data-lang="zh">路线图</span><span data-lang="en">Roadmap</span></div>
+    <h2 class="section-title"><span data-lang="zh">三阶段实施路线</span><span data-lang="en">Three-Phase Implementation</span></h2>
+    <p class="section-desc">
+      <span data-lang="zh">务实的验证驱动方式：先跑通可用的，从真实用法中学习，有数据支撑时再扩展。</span>
+      <span data-lang="en">A pragmatic, validation-driven approach: start with what works, learn from real usage, scale only when the data justifies it.</span>
+    </p>
     <div class="roadmap-grid">
 
       <!-- Phase 1 -->
       <div class="phase-card">
         <div class="phase-num">1</div>
-        <h3>Genie Customization & Enhancement</h3>
-        <div class="phase-sub">Seed Team + Deep Semantic Annotation</div>
-        <p>Build on Databricks Genie's existing Text-to-SQL capability. No reinventing the wheel &mdash; focus on domain-specific depth.</p>
-        <ul>
+        <h3><span data-lang="zh">Genie 定制化增强</span><span data-lang="en">Genie Customization & Enhancement</span></h3>
+        <div class="phase-sub"><span data-lang="zh">种子团队 + 深度语义标注</span><span data-lang="en">Seed Team + Deep Semantic Annotation</span></div>
+        <p data-lang="zh">基于 Databricks Genie 现有 Text-to-SQL 能力。不重复造轮子——聚焦行业特定的深度定制。</p>
+        <p data-lang="en">Build on Databricks Genie's existing Text-to-SQL capability. No reinventing the wheel &mdash; focus on domain-specific depth.</p>
+        <ul data-lang="zh">
+          <li>选取 1-2 个种子团队进行试点部署</li>
+          <li>标注 50 个高频查询场景的业务语义：字段定义、指标口径、常见歧义</li>
+          <li>实现置信度评分——低置信度结果主动提示用户确认</li>
+          <li>构建语义层：将业务术语映射到表结构和字段级血缘</li>
+        </ul>
+        <ul data-lang="en">
           <li>Select 1-2 seed teams for pilot deployment</li>
           <li>Annotate top 50 high-frequency query scenarios with business semantics: field definitions, metric calibers, common ambiguities</li>
           <li>Implement confidence scoring &mdash; low-confidence results actively prompt user confirmation</li>
@@ -367,10 +407,17 @@
       <!-- Phase 2 -->
       <div class="phase-card">
         <div class="phase-num">2</div>
-        <h3>Memory & Feedback Loop</h3>
-        <div class="phase-sub">From Coding Agent V4: Conversation Compression</div>
-        <p>The Agent learns from corrections and never repeats the same mistake. Directly transferring proven techniques from production coding agent.</p>
-        <ul>
+        <h3><span data-lang="zh">记忆与反馈闭环</span><span data-lang="en">Memory & Feedback Loop</span></h3>
+        <div class="phase-sub"><span data-lang="zh">来自 Coding Agent V4：对话压缩技术</span><span data-lang="en">From Coding Agent V4: Conversation Compression</span></div>
+        <p data-lang="zh">Agent 从纠正中学习，不再重复同样的错误。直接迁移生产级 Coding Agent 的验证技术。</p>
+        <p data-lang="en">The Agent learns from corrections and never repeats the same mistake. Directly transferring proven techniques from production coding agent.</p>
+        <ul data-lang="zh">
+          <li>用户纠错记忆——Agent 记录并避免重复错误</li>
+          <li>对话压缩引擎：25 条消息阈值自动触发，<strong>token 降低 40-60%</strong>（V4 生产实测）</li>
+          <li>查询模式缓存——高频问题获得即时结构化响应</li>
+          <li>跨 session 记忆：业务上下文跨对话持久化</li>
+        </ul>
+        <ul data-lang="en">
           <li>User correction memory &mdash; Agent records and avoids repeating errors</li>
           <li>Conversation compression engine: auto-trigger at 25-message threshold, <strong>40-60% token reduction</strong> (measured in production V4)</li>
           <li>Query pattern caching &mdash; frequently asked questions get instant structured responses</li>
@@ -381,10 +428,17 @@
       <!-- Phase 3 -->
       <div class="phase-card">
         <div class="phase-num">3</div>
-        <h3>Demand-Driven Multi-Agent</h3>
-        <div class="phase-sub">Supervisor + Specialized Agents</div>
-        <p>Scale architecture only when real usage patterns justify it. Not architecture-first, but demand-first.</p>
-        <ul>
+        <h3><span data-lang="zh">需求驱动的多 Agent 架构</span><span data-lang="en">Demand-Driven Multi-Agent</span></h3>
+        <div class="phase-sub"><span data-lang="zh">Supervisor + 专业化 Agent</span><span data-lang="en">Supervisor + Specialized Agents</span></div>
+        <p data-lang="zh">只有真实使用数据支撑时才扩展架构。不是架构优先，而是需求优先。</p>
+        <p data-lang="en">Scale architecture only when real usage patterns justify it. Not architecture-first, but demand-first.</p>
+        <ul data-lang="zh">
+          <li>Supervisor Agent 负责任务路由编排</li>
+          <li>结构化数据 Agent——SQL 生成、聚合分析、趋势分析</li>
+          <li>文档 Agent——内部文档、政策法规、非结构化知识检索</li>
+          <li>子 Agent 委派：复杂查询成功率 <strong>60% → 85%</strong>（Coding Agent V4 实测）</li>
+        </ul>
+        <ul data-lang="en">
           <li>Supervisor Agent orchestrates task routing</li>
           <li>Structured Data Agent &mdash; SQL generation, aggregation, trend analysis</li>
           <li>Document Agent &mdash; internal docs, policies, unstructured knowledge retrieval</li>
@@ -399,29 +453,36 @@
 <!-- SECURITY -->
 <section id="security">
   <div class="container">
-    <div class="section-label">Security</div>
-    <h2 class="section-title">Enterprise-Grade Security Architecture</h2>
-    <p class="section-desc">Security is not a feature &mdash; it is the foundation. Every query respects existing governance.</p>
+    <div class="section-label"><span data-lang="zh">安全架构</span><span data-lang="en">Security</span></div>
+    <h2 class="section-title"><span data-lang="zh">企业级安全架构</span><span data-lang="en">Enterprise-Grade Security Architecture</span></h2>
+    <p class="section-desc">
+      <span data-lang="zh">安全不是功能——而是基础。每一次查询都遵循现有的治理策略。</span>
+      <span data-lang="en">Security is not a feature &mdash; it is the foundation. Every query respects existing governance.</span>
+    </p>
     <div class="security-grid">
       <div class="sec-card">
         <div class="sec-icon">&#x1f512;</div>
-        <h4>Unity Catalog Pass-Through</h4>
-        <p>Agent inherits user's existing Unity Catalog permissions. No privilege escalation &mdash; you see what you're authorized to see, nothing more.</p>
+        <h4><span data-lang="zh">Unity Catalog 权限透传</span><span data-lang="en">Unity Catalog Pass-Through</span></h4>
+        <p data-lang="zh">Agent 继承用户现有的 Unity Catalog 权限。无权限提升——你只能看到你被授权看到的数据，不多也不少。</p>
+        <p data-lang="en">Agent inherits user's existing Unity Catalog permissions. No privilege escalation &mdash; you see what you're authorized to see, nothing more.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">&#x1f4cb;</div>
-        <h4>Full Audit Trail</h4>
-        <p>Every query, every generated SQL, every result &mdash; logged with user identity, timestamp, and data lineage for complete traceability.</p>
+        <h4><span data-lang="zh">完整审计日志</span><span data-lang="en">Full Audit Trail</span></h4>
+        <p data-lang="zh">每一次查询、每一条生成的 SQL、每一个结果——都记录了用户身份、时间戳和数据血缘，完全可追溯。</p>
+        <p data-lang="en">Every query, every generated SQL, every result &mdash; logged with user identity, timestamp, and data lineage for complete traceability.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">&#x26a0;</div>
-        <h4>Confidence Classification</h4>
-        <p>Results are tagged with confidence levels. Low-confidence answers prompt user verification before being treated as trustworthy.</p>
+        <h4><span data-lang="zh">置信度分级提醒</span><span data-lang="en">Confidence Classification</span></h4>
+        <p data-lang="zh">结果带置信度标签。低置信度答案在被视为可信之前，会主动提示用户核实。</p>
+        <p data-lang="en">Results are tagged with confidence levels. Low-confidence answers prompt user verification before being treated as trustworthy.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">&#x1f6e1;</div>
-        <h4>Data Boundary Enforcement</h4>
-        <p>Row-level and column-level security policies enforced at query time. Sensitive fields are masked or excluded automatically.</p>
+        <h4><span data-lang="zh">数据边界强制执行</span><span data-lang="en">Data Boundary Enforcement</span></h4>
+        <p data-lang="zh">行级和列级安全策略在查询时强制执行。敏感字段自动脱敏或排除。</p>
+        <p data-lang="en">Row-level and column-level security policies enforced at query time. Sensitive fields are masked or excluded automatically.</p>
       </div>
     </div>
   </div>
@@ -430,36 +491,72 @@
 <!-- METHODOLOGY -->
 <section class="method" id="methodology">
   <div class="container">
-    <div class="section-label">Methodology</div>
-    <h2 class="section-title">Technical Approach</h2>
-    <p class="section-desc">Insights from building 5 versions of a production coding agent &mdash; 33 lines to 9,266 lines &mdash; applied to data analysis.</p>
+    <div class="section-label"><span data-lang="zh">技术方法论</span><span data-lang="en">Methodology</span></div>
+    <h2 class="section-title"><span data-lang="zh">技术方法论</span><span data-lang="en">Technical Approach</span></h2>
+    <p class="section-desc">
+      <span data-lang="zh">从构建 5 个版本生产级 Coding Agent 中获得的经验——33 行到 9,266 行——应用于数据分析领域。</span>
+      <span data-lang="en">Insights from building 5 versions of a production coding agent &mdash; 33 lines to 9,266 lines &mdash; applied to data analysis.</span>
+    </p>
 
     <div class="method-grid">
       <div class="method-block">
-        <h3>Layered Context Architecture</h3>
-        <p>The hardest problem in data analysis agents is not SQL generation &mdash; it is context. "What were last month's shipments?" means different things to different departments.</p>
-        <p>Inspired by OpenAI's internal data agent practice (serving 3,500 people across 600PB of data), we build context in layers:</p>
+        <h3><span data-lang="zh">上下文分层架构</span><span data-lang="en">Layered Context Architecture</span></h3>
+        <p data-lang="zh">数据分析 Agent 最难的问题不是 SQL 生成——而是上下文。"上个月的出货量是多少？"对不同部门意味着完全不同的口径。</p>
+        <p data-lang="en">The hardest problem in data analysis agents is not SQL generation &mdash; it is context. "What were last month's shipments?" means different things to different departments.</p>
+        <p data-lang="zh">借鉴 OpenAI 内部数据 Agent 实践（服务 3,500 人、600PB 数据），我们分层构建上下文：</p>
+        <p data-lang="en">Inspired by OpenAI's internal data agent practice (serving 3,500 people across 600PB of data), we build context in layers:</p>
         <ul style="list-style:none; margin-top:12px;">
-          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);"><strong>Layer 1:</strong> Global schema &mdash; table structures, column types, relationships</li>
-          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);"><strong>Layer 2:</strong> Domain semantics &mdash; business definitions, metric calibers, department-specific terms</li>
-          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);"><strong>Layer 3:</strong> User context &mdash; role, team, query history, correction history</li>
+          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);">
+            <strong><span data-lang="zh">第一层：</span><span data-lang="en">Layer 1:</span></strong>
+            <span data-lang="zh">全局 schema——表结构、字段类型、关联关系</span>
+            <span data-lang="en">Global schema &mdash; table structures, column types, relationships</span>
+          </li>
+          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);">
+            <strong><span data-lang="zh">第二层：</span><span data-lang="en">Layer 2:</span></strong>
+            <span data-lang="zh">领域语义——业务定义、指标口径、部门专属术语</span>
+            <span data-lang="en">Domain semantics &mdash; business definitions, metric calibers, department-specific terms</span>
+          </li>
+          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);">
+            <strong><span data-lang="zh">第三层：</span><span data-lang="en">Layer 3:</span></strong>
+            <span data-lang="zh">用户上下文——角色、团队、查询历史、纠错历史</span>
+            <span data-lang="en">User context &mdash; role, team, query history, correction history</span>
+          </li>
         </ul>
         <div class="highlight">
-          <p>Core challenge: fitting the most valuable context into a limited token window. Same problem, different domain.</p>
+          <p data-lang="zh">核心挑战：在有限的 token 窗口内塞入最有价值的上下文。同样的问题，不同的领域。</p>
+          <p data-lang="en">Core challenge: fitting the most valuable context into a limited token window. Same problem, different domain.</p>
         </div>
       </div>
 
       <div class="method-block">
-        <h3>Lessons from 5 Agent Versions</h3>
-        <p>Building a coding agent from scratch taught us what works and what doesn't when taking agents from prototype to production:</p>
+        <h3><span data-lang="zh">5 个 Agent 版本的实战经验</span><span data-lang="en">Lessons from 5 Agent Versions</span></h3>
+        <p data-lang="zh">从零构建 Coding Agent 让我们深刻理解了将 Agent 从原型推向生产的关键所在：</p>
+        <p data-lang="en">Building a coding agent from scratch taught us what works and what doesn't when taking agents from prototype to production:</p>
         <ul style="list-style:none; margin-top:12px;">
-          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V0-V2:</strong> Proved feasibility. LLM + tool calling works, but fails on complex tasks.</li>
-          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V3:</strong> Architecture inflection point. Controller/Action pattern enables extensibility.</li>
-          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V4:</strong> Production breakthrough. Sub-agent delegation (60%&rarr;85% success), conversation compression (40-60% token savings).</li>
-          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V5:</strong> Quantitative evaluation. SWE-bench framework to objectively measure strategy effectiveness.</li>
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);">
+            <strong>V0-V2：</strong>
+            <span data-lang="zh">验证了可行性。LLM + 工具调用可行，但复杂任务会失败。</span>
+            <span data-lang="en">Proved feasibility. LLM + tool calling works, but fails on complex tasks.</span>
+          </li>
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);">
+            <strong>V3：</strong>
+            <span data-lang="zh">架构拐点。OOP 工具注册机制实现可扩展性。</span>
+            <span data-lang="en">Architecture inflection point. OOP tool registration enables extensibility.</span>
+          </li>
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);">
+            <strong>V4：</strong>
+            <span data-lang="zh">生产突破。子 Agent 委派（60%→85% 成功率），对话压缩（token 节省 40-60%）。</span>
+            <span data-lang="en">Production breakthrough. Sub-agent delegation (60%→85% success), conversation compression (40-60% token savings).</span>
+          </li>
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);">
+            <strong>V5：</strong>
+            <span data-lang="zh">量化评估。SWE-bench 框架客观衡量策略效果。</span>
+            <span data-lang="en">Quantitative evaluation. SWE-bench framework to objectively measure strategy effectiveness.</span>
+          </li>
         </ul>
         <div class="highlight">
-          <p>The biggest leap was never a better model &mdash; it was better context management and tool orchestration.</p>
+          <p data-lang="zh">最大的飞跃从来不是更好的模型——而是更好的上下文管理和工具编排。</p>
+          <p data-lang="en">The biggest leap was never a better model &mdash; it was better context management and tool orchestration.</p>
         </div>
       </div>
     </div>
@@ -467,19 +564,19 @@
     <div class="stats-row">
       <div class="stat-item">
         <div class="stat-num">33 <span>&rarr;</span> 9,266</div>
-        <div class="stat-label">Lines of code across 5 versions</div>
+        <div class="stat-label"><span data-lang="zh">5 个版本的代码行数演进</span><span data-lang="en">Lines of code across 5 versions</span></div>
       </div>
       <div class="stat-item">
         <div class="stat-num">40-60<span>%</span></div>
-        <div class="stat-label">Token reduction via compression</div>
+        <div class="stat-label"><span data-lang="zh">对话压缩后 token 降低</span><span data-lang="en">Token reduction via compression</span></div>
       </div>
       <div class="stat-item">
         <div class="stat-num">60 <span>&rarr;</span> 85<span>%</span></div>
-        <div class="stat-label">Success rate with sub-agents</div>
+        <div class="stat-label"><span data-lang="zh">子 Agent 带来的成功率提升</span><span data-lang="en">Success rate with sub-agents</span></div>
       </div>
       <div class="stat-item">
         <div class="stat-num">~10,000</div>
-        <div class="stat-label">Production sandboxes in 17 days</div>
+        <div class="stat-label"><span data-lang="zh">17 天内上线的专属沙盒数量</span><span data-lang="en">Production sandboxes in 17 days</span></div>
       </div>
     </div>
 
@@ -489,44 +586,55 @@
 <!-- DEMO CHAT -->
 <section class="demo" id="demo">
   <div class="container">
-    <div class="section-label">Interactive Demo</div>
-    <h2 class="section-title">What It Looks Like</h2>
-    <p class="section-desc">A simulated conversation showing the Agent's clarification, SQL generation, and confidence-scored results.</p>
+    <div class="section-label"><span data-lang="zh">交互演示</span><span data-lang="en">Interactive Demo</span></div>
+    <h2 class="section-title"><span data-lang="zh">它看起来是这样的</span><span data-lang="en">What It Looks Like</span></h2>
+    <p class="section-desc">
+      <span data-lang="zh">模拟对话，展示 Agent 的澄清追问、SQL 生成与置信度评分结果。</span>
+      <span data-lang="en">A simulated conversation showing the Agent's clarification, SQL generation, and confidence-scored results.</span>
+    </p>
 
     <div class="chat-window">
       <div class="chat-header">
         <div class="chat-dot"></div>
-        <span>Lenovo Data Agent &mdash; PC Business Unit</span>
+        <span><span data-lang="zh">联想数据 Agent — PC 事业部</span><span data-lang="en">Lenovo Data Agent &mdash; PC Business Unit</span></span>
       </div>
       <div class="chat-body">
 
         <!-- User -->
         <div class="msg msg-user">
-          <div class="msg-label">User &middot; Sales Ops</div>
-          How did PC shipments look last month?
+          <div class="msg-label"><span data-lang="zh">用户 · 销售运营</span><span data-lang="en">User · Sales Ops</span></div>
+          <span data-lang="zh">上个月 PC 出货量怎么样？</span>
+          <span data-lang="en">How did PC shipments look last month?</span>
         </div>
 
         <!-- Agent clarification -->
         <div class="msg msg-agent">
           <div class="msg-label">Agent</div>
-          I want to make sure I give you the right numbers. A few clarifications:
+          <span data-lang="zh">为了给您准确的数据，我需要确认几点：<br><br>
+          <strong>1.</strong> "上个月"——指 2026 年 1 月，对吗？<br>
+          <strong>2.</strong> 哪些产品线？全部 PC，还是特定系列（ThinkPad / IdeaPad / Yoga）？<br>
+          <strong>3.</strong> 哪个指标——出货量（台）、营收，还是零售渗透率？<br>
+          <strong>4.</strong> 范围——全球还是特定区域（中国 / AP / EMEA / NA）？</span>
+          <span data-lang="en">I want to make sure I give you the right numbers. A few clarifications:
           <br><br>
           <strong>1.</strong> "Last month" &mdash; January 2026, correct?<br>
           <strong>2.</strong> Which product lines? All PC, or specific (ThinkPad / IdeaPad / Yoga)?<br>
           <strong>3.</strong> Which metric &mdash; units shipped, revenue, or sell-through?<br>
-          <strong>4.</strong> Scope &mdash; global or specific region (China / AP / EMEA / NA)?
+          <strong>4.</strong> Scope &mdash; global or specific region (China / AP / EMEA / NA)?</span>
         </div>
 
         <!-- User reply -->
         <div class="msg msg-user">
-          <div class="msg-label">User</div>
-          January, all PC lines, units shipped, China region.
+          <div class="msg-label"><span data-lang="zh">用户</span><span data-lang="en">User</span></div>
+          <span data-lang="zh">1 月，全部 PC，出货台数，中国区。</span>
+          <span data-lang="en">January, all PC lines, units shipped, China region.</span>
         </div>
 
         <!-- Agent SQL + result -->
         <div class="msg msg-agent">
           <div class="msg-label">Agent</div>
-          Got it. Here's what I found:
+          <span data-lang="zh">收到，以下是查询结果：</span>
+          <span data-lang="en">Got it. Here's what I found:</span>
 
           <div class="msg-sql">
 <span class="kw">SELECT</span> product_line,
@@ -545,48 +653,68 @@
           <div class="msg-result">
             <table>
               <thead>
-                <tr><th>Product Line</th><th>Units Shipped</th><th>Share</th></tr>
+                <tr>
+                  <th><span data-lang="zh">产品线</span><span data-lang="en">Product Line</span></th>
+                  <th><span data-lang="zh">出货台数</span><span data-lang="en">Units Shipped</span></th>
+                  <th><span data-lang="zh">占比</span><span data-lang="en">Share</span></th>
+                </tr>
               </thead>
               <tbody>
                 <tr><td>ThinkPad</td><td>182,400</td><td>38.2%</td></tr>
                 <tr><td>IdeaPad</td><td>156,800</td><td>32.8%</td></tr>
                 <tr><td>Yoga</td><td>89,300</td><td>18.7%</td></tr>
-                <tr><td>Others</td><td>49,100</td><td>10.3%</td></tr>
+                <tr><td><span data-lang="zh">其他</span><span data-lang="en">Others</span></td><td>49,100</td><td>10.3%</td></tr>
               </tbody>
             </table>
           </div>
 
-          <div class="confidence high">&#x2714; High Confidence &mdash; Exact match on metric definition (units_shipped = factory ship-out, China warehouse confirmed)</div>
+          <div class="confidence high">
+            &#x2714;
+            <span data-lang="zh">高置信度 &mdash; 指标定义精确匹配（units_shipped = 工厂出库量，中国仓已确认）</span>
+            <span data-lang="en">High Confidence &mdash; Exact match on metric definition (units_shipped = factory ship-out, China warehouse confirmed)</span>
+          </div>
         </div>
 
         <!-- User follow-up -->
         <div class="msg msg-user">
-          <div class="msg-label">User</div>
-          Compare with last January. Which line grew the most?
+          <div class="msg-label"><span data-lang="zh">用户</span><span data-lang="en">User</span></div>
+          <span data-lang="zh">和去年同期比，哪个系列增长最快？</span>
+          <span data-lang="en">Compare with last January. Which line grew the most?</span>
         </div>
 
         <!-- Agent response -->
         <div class="msg msg-agent">
           <div class="msg-label">Agent</div>
-          Comparing Jan 2026 vs Jan 2025, China region:
+          <span data-lang="zh">2026 年 1 月 vs 2025 年 1 月，中国区对比：</span>
+          <span data-lang="en">Comparing Jan 2026 vs Jan 2025, China region:</span>
 
           <div class="msg-result" style="margin-top: 12px;">
             <table>
               <thead>
-                <tr><th>Product Line</th><th>Jan '26</th><th>Jan '25</th><th>YoY Growth</th></tr>
+                <tr>
+                  <th><span data-lang="zh">产品线</span><span data-lang="en">Product Line</span></th>
+                  <th><span data-lang="zh">26年1月</span><span data-lang="en">Jan '26</span></th>
+                  <th><span data-lang="zh">25年1月</span><span data-lang="en">Jan '25</span></th>
+                  <th><span data-lang="zh">同比增长</span><span data-lang="en">YoY Growth</span></th>
+                </tr>
               </thead>
               <tbody>
                 <tr><td>Yoga</td><td>89,300</td><td>62,100</td><td style="color:var(--green); font-weight:600;">+43.8%</td></tr>
                 <tr><td>ThinkPad</td><td>182,400</td><td>168,900</td><td style="color:var(--green);">+8.0%</td></tr>
                 <tr><td>IdeaPad</td><td>156,800</td><td>151,200</td><td style="color:var(--green);">+3.7%</td></tr>
-                <tr><td>Others</td><td>49,100</td><td>52,400</td><td style="color:var(--red);">-6.3%</td></tr>
+                <tr><td><span data-lang="zh">其他</span><span data-lang="en">Others</span></td><td>49,100</td><td>52,400</td><td style="color:var(--red);">-6.3%</td></tr>
               </tbody>
             </table>
           </div>
 
-          <strong>Yoga</strong> leads with <strong>+43.8% YoY growth</strong>, driven by the Yoga Pro 14s launch in Q4 '25.
+          <span data-lang="zh"><strong>Yoga</strong> 以 <strong>+43.8% 同比增长</strong>领跑，受 25 年 Q4 Yoga Pro 14s 上市驱动。</span>
+          <span data-lang="en"><strong>Yoga</strong> leads with <strong>+43.8% YoY growth</strong>, driven by the Yoga Pro 14s launch in Q4 '25.</span>
 
-          <div class="confidence high">&#x2714; High Confidence &mdash; Same metric caliber applied to both periods</div>
+          <div class="confidence high">
+            &#x2714;
+            <span data-lang="zh">高置信度 &mdash; 两个时间段采用相同指标口径</span>
+            <span data-lang="en">High Confidence &mdash; Same metric caliber applied to both periods</span>
+          </div>
         </div>
 
       </div>
@@ -597,14 +725,34 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>Prepared by <a href="https://github.com/warren-wupeng" target="_blank" rel="noopener">Warren Wu (GitHub: warren-wupeng)</a></p>
+  <p><span data-lang="zh">由</span> <a href="https://github.com/warren-wupeng" target="_blank" rel="noopener">Warren Wu (GitHub: warren-wupeng)</a> <span data-lang="zh">准备</span><span data-lang="en">Prepared by Warren Wu</span></p>
   <p style="font-size: 13px; color: var(--gray-500);">
-    Proposal for Lenovo Data Intelligence Platform &mdash; February 2026
+    <span data-lang="zh">联想数据智能平台方案 &mdash; 2026 年 2 月</span>
+    <span data-lang="en">Proposal for Lenovo Data Intelligence Platform &mdash; February 2026</span>
   </p>
   <p class="footer-note">
-    This is a product concept demonstration. All data shown is simulated for illustration purposes.
+    <span data-lang="zh">本页为产品概念演示，所有展示数据均为模拟示意。</span>
+    <span data-lang="en">This is a product concept demonstration. All data shown is simulated for illustration purposes.</span>
   </p>
 </footer>
+
+<script>
+  function toggleLang() {
+    const body = document.body;
+    const btn = document.getElementById('langBtn');
+    if (body.classList.contains('lang-zh')) {
+      body.classList.replace('lang-zh', 'lang-en');
+      btn.textContent = '中文';
+      document.documentElement.lang = 'en';
+      document.title = 'Lenovo Data Analysis Agent - Product Proposal';
+    } else {
+      body.classList.replace('lang-en', 'lang-zh');
+      btn.textContent = 'EN';
+      document.documentElement.lang = 'zh-CN';
+      document.title = '联想数据分析 Agent — 产品方案';
+    }
+  }
+</script>
 
 </body>
 </html>
