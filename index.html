@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lenovo Data Analysis Agent - Product Proposal</title>
+<style>
+  :root {
+    --navy: #1a2332;
+    --navy-light: #243044;
+    --navy-dark: #0f1720;
+    --blue: #2563eb;
+    --blue-light: #3b82f6;
+    --orange: #f97316;
+    --orange-light: #fb923c;
+    --white: #ffffff;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --green: #10b981;
+    --red: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    color: var(--gray-800);
+    line-height: 1.6;
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(26,35,50,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 24px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    color: var(--white); font-size: 15px; font-weight: 600; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--gray-400); text-decoration: none; font-size: 13px;
+    font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, #1e3a5f 100%);
+    padding: 140px 24px 100px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(37,99,235,0.12) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(249,115,22,0.08) 0%, transparent 50%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block; padding: 6px 16px; border-radius: 20px;
+    background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3);
+    color: var(--orange-light); font-size: 13px; font-weight: 500;
+    margin-bottom: 28px; letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px); font-weight: 700;
+    color: var(--white); line-height: 1.2; margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: clamp(16px, 2.5vw, 20px); color: var(--gray-400);
+    max-width: 600px; margin: 0 auto 36px; line-height: 1.7;
+  }
+  .hero-stack {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  }
+  .hero-stack .chip {
+    padding: 8px 18px; border-radius: 8px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--gray-300); font-size: 13px; font-weight: 500;
+  }
+
+  /* ---- SECTIONS ---- */
+  section { padding: 80px 24px; }
+  .container { max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; padding: 4px 12px; border-radius: 6px;
+    background: rgba(37,99,235,0.08); color: var(--blue);
+    font-size: 12px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(24px, 4vw, 36px); font-weight: 700;
+    color: var(--navy); line-height: 1.3; margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 16px; color: var(--gray-500); max-width: 640px;
+    line-height: 1.7; margin-bottom: 48px;
+  }
+
+  /* ---- ROADMAP ---- */
+  .roadmap { background: var(--gray-50); }
+  .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .phase-card {
+    background: var(--white); border-radius: 16px; padding: 32px;
+    border: 1px solid var(--gray-200); position: relative;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .phase-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px);
+  }
+  .phase-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--white);
+    margin-bottom: 20px;
+  }
+  .phase-card:nth-child(1) .phase-num { background: var(--blue); }
+  .phase-card:nth-child(2) .phase-num { background: var(--orange); }
+  .phase-card:nth-child(3) .phase-num { background: var(--green); }
+
+  .phase-card h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .phase-card .phase-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; font-weight: 500; }
+  .phase-card p { font-size: 14px; color: var(--gray-600); line-height: 1.7; margin-bottom: 16px; }
+  .phase-card ul { list-style: none; }
+  .phase-card ul li {
+    font-size: 14px; color: var(--gray-600); padding: 6px 0;
+    padding-left: 20px; position: relative;
+  }
+  .phase-card ul li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .phase-card:nth-child(1) ul li::before { background: var(--blue); }
+  .phase-card:nth-child(2) ul li::before { background: var(--orange); }
+  .phase-card:nth-child(3) ul li::before { background: var(--green); }
+
+  /* ---- SECURITY ---- */
+  .security-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
+  }
+  .sec-card {
+    padding: 28px; border-radius: 12px;
+    border: 1px solid var(--gray-200); background: var(--white);
+  }
+  .sec-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(37,99,235,0.08); display: flex;
+    align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 20px;
+  }
+  .sec-card h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .sec-card p { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+  /* ---- METHODOLOGY ---- */
+  .method { background: var(--gray-50); }
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 768px) { .method-grid { grid-template-columns: 1fr; } }
+  .method-block {
+    background: var(--white); border-radius: 16px; padding: 32px;
+    border: 1px solid var(--gray-200);
+  }
+  .method-block h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+  .method-block p { font-size: 14px; color: var(--gray-600); line-height: 1.7; margin-bottom: 12px; }
+  .method-block .highlight {
+    background: rgba(249,115,22,0.06); border-left: 3px solid var(--orange);
+    padding: 12px 16px; border-radius: 0 8px 8px 0; margin-top: 16px;
+  }
+  .method-block .highlight p { color: var(--gray-700); font-weight: 500; margin: 0; }
+
+  /* ---- STATS ---- */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px; margin-top: 32px;
+  }
+  .stat-item { text-align: center; padding: 24px; }
+  .stat-num {
+    font-size: 32px; font-weight: 800; color: var(--navy);
+    line-height: 1; margin-bottom: 4px;
+  }
+  .stat-num span { color: var(--orange); }
+  .stat-label { font-size: 13px; color: var(--gray-500); }
+
+  /* ---- DEMO CHAT ---- */
+  .demo { background: var(--navy); color: var(--white); }
+  .demo .section-label { background: rgba(249,115,22,0.15); color: var(--orange-light); }
+  .demo .section-title { color: var(--white); }
+  .demo .section-desc { color: var(--gray-400); }
+
+  .chat-window {
+    max-width: 680px; margin: 0 auto;
+    background: var(--navy-light); border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+  }
+  .chat-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .chat-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: var(--green);
+  }
+  .chat-header span { font-size: 14px; font-weight: 600; color: var(--gray-300); }
+  .chat-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+
+  .msg {
+    max-width: 85%; padding: 14px 18px; border-radius: 14px;
+    font-size: 14px; line-height: 1.6; animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+  .msg-user {
+    align-self: flex-end;
+    background: var(--blue); color: var(--white);
+    border-bottom-right-radius: 4px;
+  }
+  .msg-agent {
+    align-self: flex-start;
+    background: rgba(255,255,255,0.06); color: var(--gray-200);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-bottom-left-radius: 4px;
+  }
+  .msg-label {
+    font-size: 11px; font-weight: 600; margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .msg-user .msg-label { color: rgba(255,255,255,0.7); }
+  .msg-agent .msg-label { color: var(--orange-light); }
+
+  .msg-sql {
+    background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px 16px;
+    font-family: "SF Mono", "Cascadia Code", "Consolas", monospace;
+    font-size: 12px; color: var(--gray-300); margin-top: 10px;
+    border: 1px solid rgba(255,255,255,0.05); overflow-x: auto;
+  }
+  .msg-sql .kw { color: var(--blue-light); }
+  .msg-sql .fn { color: var(--orange-light); }
+  .msg-sql .cm { color: var(--gray-500); font-style: italic; }
+
+  .confidence {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 6px; font-size: 12px;
+    font-weight: 600; margin-top: 10px;
+  }
+  .confidence.high { background: rgba(16,185,129,0.15); color: var(--green); }
+
+  .msg-result {
+    margin-top: 12px; border-radius: 8px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .msg-result table {
+    width: 100%; font-size: 13px; border-collapse: collapse;
+  }
+  .msg-result th {
+    background: rgba(255,255,255,0.05); text-align: left;
+    padding: 8px 14px; color: var(--gray-400); font-weight: 600;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .msg-result td {
+    padding: 10px 14px; border-top: 1px solid rgba(255,255,255,0.04);
+    color: var(--gray-300);
+  }
+  .msg-result tr:hover td { background: rgba(255,255,255,0.02); }
+
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .msg:nth-child(1) { animation-delay: 0.3s; }
+  .msg:nth-child(2) { animation-delay: 0.9s; }
+  .msg:nth-child(3) { animation-delay: 1.5s; }
+  .msg:nth-child(4) { animation-delay: 2.1s; }
+  .msg:nth-child(5) { animation-delay: 2.7s; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--navy-dark); padding: 48px 24px;
+    text-align: center; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer p { color: var(--gray-500); font-size: 14px; margin-bottom: 12px; }
+  footer a {
+    color: var(--orange-light); text-decoration: none; font-weight: 500;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: var(--orange); }
+  footer .footer-note {
+    margin-top: 20px; font-size: 12px; color: var(--gray-600);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">LENOVO <span>Data Analysis Agent</span></div>
+    <div class="nav-links">
+      <a href="#roadmap">Roadmap</a>
+      <a href="#security">Security</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#demo">Demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Product Proposal &mdash; Data Intelligence Platform</div>
+    <h1>Let Every Business Team Have Their Own <em>Data Analyst</em></h1>
+    <p>An intelligent data analysis Agent built on Databricks, transforming natural language into trustworthy business insights with enterprise-grade security and governance.</p>
+    <div class="hero-stack">
+      <div class="chip">Databricks Genie</div>
+      <div class="chip">Unity Catalog</div>
+      <div class="chip">Text-to-SQL</div>
+      <div class="chip">Multi-Agent</div>
+      <div class="chip">Feedback Loop</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap" id="roadmap">
+  <div class="container">
+    <div class="section-label">Roadmap</div>
+    <h2 class="section-title">Three-Phase Implementation</h2>
+    <p class="section-desc">A pragmatic, validation-driven approach: start with what works, learn from real usage, scale only when the data justifies it.</p>
+    <div class="roadmap-grid">
+
+      <!-- Phase 1 -->
+      <div class="phase-card">
+        <div class="phase-num">1</div>
+        <h3>Genie Customization & Enhancement</h3>
+        <div class="phase-sub">Seed Team + Deep Semantic Annotation</div>
+        <p>Build on Databricks Genie's existing Text-to-SQL capability. No reinventing the wheel &mdash; focus on domain-specific depth.</p>
+        <ul>
+          <li>Select 1-2 seed teams for pilot deployment</li>
+          <li>Annotate top 50 high-frequency query scenarios with business semantics: field definitions, metric calibers, common ambiguities</li>
+          <li>Implement confidence scoring &mdash; low-confidence results actively prompt user confirmation</li>
+          <li>Build semantic layer: map business terms to table schemas and column-level lineage</li>
+        </ul>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-card">
+        <div class="phase-num">2</div>
+        <h3>Memory & Feedback Loop</h3>
+        <div class="phase-sub">From Coding Agent V4: Conversation Compression</div>
+        <p>The Agent learns from corrections and never repeats the same mistake. Directly transferring proven techniques from production coding agent.</p>
+        <ul>
+          <li>User correction memory &mdash; Agent records and avoids repeating errors</li>
+          <li>Conversation compression engine: auto-trigger at 25-message threshold, <strong>40-60% token reduction</strong> (measured in production V4)</li>
+          <li>Query pattern caching &mdash; frequently asked questions get instant structured responses</li>
+          <li>Cross-session memory: business context persists across conversations</li>
+        </ul>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-card">
+        <div class="phase-num">3</div>
+        <h3>Demand-Driven Multi-Agent</h3>
+        <div class="phase-sub">Supervisor + Specialized Agents</div>
+        <p>Scale architecture only when real usage patterns justify it. Not architecture-first, but demand-first.</p>
+        <ul>
+          <li>Supervisor Agent orchestrates task routing</li>
+          <li>Structured Data Agent &mdash; SQL generation, aggregation, trend analysis</li>
+          <li>Document Agent &mdash; internal docs, policies, unstructured knowledge retrieval</li>
+          <li>Sub-agent delegation: <strong>60% &rarr; 85% success rate</strong> on complex queries (proven in coding agent V4)</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security">
+  <div class="container">
+    <div class="section-label">Security</div>
+    <h2 class="section-title">Enterprise-Grade Security Architecture</h2>
+    <p class="section-desc">Security is not a feature &mdash; it is the foundation. Every query respects existing governance.</p>
+    <div class="security-grid">
+      <div class="sec-card">
+        <div class="sec-icon">&#x1f512;</div>
+        <h4>Unity Catalog Pass-Through</h4>
+        <p>Agent inherits user's existing Unity Catalog permissions. No privilege escalation &mdash; you see what you're authorized to see, nothing more.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">&#x1f4cb;</div>
+        <h4>Full Audit Trail</h4>
+        <p>Every query, every generated SQL, every result &mdash; logged with user identity, timestamp, and data lineage for complete traceability.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">&#x26a0;</div>
+        <h4>Confidence Classification</h4>
+        <p>Results are tagged with confidence levels. Low-confidence answers prompt user verification before being treated as trustworthy.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">&#x1f6e1;</div>
+        <h4>Data Boundary Enforcement</h4>
+        <p>Row-level and column-level security policies enforced at query time. Sensitive fields are masked or excluded automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="method" id="methodology">
+  <div class="container">
+    <div class="section-label">Methodology</div>
+    <h2 class="section-title">Technical Approach</h2>
+    <p class="section-desc">Insights from building 5 versions of a production coding agent &mdash; 33 lines to 9,266 lines &mdash; applied to data analysis.</p>
+
+    <div class="method-grid">
+      <div class="method-block">
+        <h3>Layered Context Architecture</h3>
+        <p>The hardest problem in data analysis agents is not SQL generation &mdash; it is context. "What were last month's shipments?" means different things to different departments.</p>
+        <p>Inspired by OpenAI's internal data agent practice (serving 3,500 people across 600PB of data), we build context in layers:</p>
+        <ul style="list-style:none; margin-top:12px;">
+          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);"><strong>Layer 1:</strong> Global schema &mdash; table structures, column types, relationships</li>
+          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);"><strong>Layer 2:</strong> Domain semantics &mdash; business definitions, metric calibers, department-specific terms</li>
+          <li style="padding:6px 0; font-size:14px; color:var(--gray-600);"><strong>Layer 3:</strong> User context &mdash; role, team, query history, correction history</li>
+        </ul>
+        <div class="highlight">
+          <p>Core challenge: fitting the most valuable context into a limited token window. Same problem, different domain.</p>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <h3>Lessons from 5 Agent Versions</h3>
+        <p>Building a coding agent from scratch taught us what works and what doesn't when taking agents from prototype to production:</p>
+        <ul style="list-style:none; margin-top:12px;">
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V0-V2:</strong> Proved feasibility. LLM + tool calling works, but fails on complex tasks.</li>
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V3:</strong> Architecture inflection point. Controller/Action pattern enables extensibility.</li>
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V4:</strong> Production breakthrough. Sub-agent delegation (60%&rarr;85% success), conversation compression (40-60% token savings).</li>
+          <li style="padding:8px 0; font-size:14px; color:var(--gray-600);"><strong>V5:</strong> Quantitative evaluation. SWE-bench framework to objectively measure strategy effectiveness.</li>
+        </ul>
+        <div class="highlight">
+          <p>The biggest leap was never a better model &mdash; it was better context management and tool orchestration.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">33 <span>&rarr;</span> 9,266</div>
+        <div class="stat-label">Lines of code across 5 versions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">40-60<span>%</span></div>
+        <div class="stat-label">Token reduction via compression</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">60 <span>&rarr;</span> 85<span>%</span></div>
+        <div class="stat-label">Success rate with sub-agents</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">~10,000</div>
+        <div class="stat-label">Production sandboxes in 17 days</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DEMO CHAT -->
+<section class="demo" id="demo">
+  <div class="container">
+    <div class="section-label">Interactive Demo</div>
+    <h2 class="section-title">What It Looks Like</h2>
+    <p class="section-desc">A simulated conversation showing the Agent's clarification, SQL generation, and confidence-scored results.</p>
+
+    <div class="chat-window">
+      <div class="chat-header">
+        <div class="chat-dot"></div>
+        <span>Lenovo Data Agent &mdash; PC Business Unit</span>
+      </div>
+      <div class="chat-body">
+
+        <!-- User -->
+        <div class="msg msg-user">
+          <div class="msg-label">User &middot; Sales Ops</div>
+          How did PC shipments look last month?
+        </div>
+
+        <!-- Agent clarification -->
+        <div class="msg msg-agent">
+          <div class="msg-label">Agent</div>
+          I want to make sure I give you the right numbers. A few clarifications:
+          <br><br>
+          <strong>1.</strong> "Last month" &mdash; January 2026, correct?<br>
+          <strong>2.</strong> Which product lines? All PC, or specific (ThinkPad / IdeaPad / Yoga)?<br>
+          <strong>3.</strong> Which metric &mdash; units shipped, revenue, or sell-through?<br>
+          <strong>4.</strong> Scope &mdash; global or specific region (China / AP / EMEA / NA)?
+        </div>
+
+        <!-- User reply -->
+        <div class="msg msg-user">
+          <div class="msg-label">User</div>
+          January, all PC lines, units shipped, China region.
+        </div>
+
+        <!-- Agent SQL + result -->
+        <div class="msg msg-agent">
+          <div class="msg-label">Agent</div>
+          Got it. Here's what I found:
+
+          <div class="msg-sql">
+<span class="kw">SELECT</span> product_line,
+       <span class="fn">SUM</span>(units_shipped) <span class="kw">AS</span> total_units,
+       <span class="fn">ROUND</span>(<span class="fn">SUM</span>(units_shipped) * 100.0 /
+             <span class="fn">SUM</span>(<span class="fn">SUM</span>(units_shipped)) <span class="fn">OVER</span>(), 1)
+         <span class="kw">AS</span> share_pct
+<span class="kw">FROM</span>   shipments.monthly_summary
+<span class="kw">WHERE</span>  region = <span style="color:#a5d6a7">'CN'</span>
+  <span class="kw">AND</span>  ship_month = <span style="color:#a5d6a7">'2026-01'</span>
+<span class="kw">GROUP BY</span> product_line
+<span class="kw">ORDER BY</span> total_units <span class="kw">DESC</span>;
+<span class="cm">-- Source: shipments.monthly_summary (Unity Catalog: pc_analytics)</span>
+          </div>
+
+          <div class="msg-result">
+            <table>
+              <thead>
+                <tr><th>Product Line</th><th>Units Shipped</th><th>Share</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>ThinkPad</td><td>182,400</td><td>38.2%</td></tr>
+                <tr><td>IdeaPad</td><td>156,800</td><td>32.8%</td></tr>
+                <tr><td>Yoga</td><td>89,300</td><td>18.7%</td></tr>
+                <tr><td>Others</td><td>49,100</td><td>10.3%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="confidence high">&#x2714; High Confidence &mdash; Exact match on metric definition (units_shipped = factory ship-out, China warehouse confirmed)</div>
+        </div>
+
+        <!-- User follow-up -->
+        <div class="msg msg-user">
+          <div class="msg-label">User</div>
+          Compare with last January. Which line grew the most?
+        </div>
+
+        <!-- Agent response -->
+        <div class="msg msg-agent">
+          <div class="msg-label">Agent</div>
+          Comparing Jan 2026 vs Jan 2025, China region:
+
+          <div class="msg-result" style="margin-top: 12px;">
+            <table>
+              <thead>
+                <tr><th>Product Line</th><th>Jan '26</th><th>Jan '25</th><th>YoY Growth</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Yoga</td><td>89,300</td><td>62,100</td><td style="color:var(--green); font-weight:600;">+43.8%</td></tr>
+                <tr><td>ThinkPad</td><td>182,400</td><td>168,900</td><td style="color:var(--green);">+8.0%</td></tr>
+                <tr><td>IdeaPad</td><td>156,800</td><td>151,200</td><td style="color:var(--green);">+3.7%</td></tr>
+                <tr><td>Others</td><td>49,100</td><td>52,400</td><td style="color:var(--red);">-6.3%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <strong>Yoga</strong> leads with <strong>+43.8% YoY growth</strong>, driven by the Yoga Pro 14s launch in Q4 '25.
+
+          <div class="confidence high">&#x2714; High Confidence &mdash; Same metric caliber applied to both periods</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Prepared by <a href="https://github.com/warren-wupeng" target="_blank" rel="noopener">Warren Wu (GitHub: warren-wupeng)</a></p>
+  <p style="font-size: 13px; color: var(--gray-500);">
+    Proposal for Lenovo Data Intelligence Platform &mdash; February 2026
+  </p>
+  <p class="footer-note">
+    This is a product concept demonstration. All data shown is simulated for illustration purposes.
+  </p>
+</footer>
+
+</body>
+</html>
