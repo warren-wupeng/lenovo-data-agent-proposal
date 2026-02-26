@@ -360,12 +360,12 @@
     </div>
     <h1 data-lang="zh">让每个业务团队都拥有<br>自己的<em>数据分析师</em></h1>
     <h1 data-lang="en">Let Every Business Team Have Their Own <em>Data Analyst</em></h1>
-    <p data-lang="zh">适配双环境架构（云上 Azure Databricks + 私有数据中心 Apache 开源框架）的智能数据分析 Agent，将自然语言转化为可信赖的业务洞察。</p>
-    <p data-lang="en">An intelligent data analysis Agent for hybrid environments (Azure Databricks + on-prem Apache open-source stack), transforming natural language into trustworthy business insights.</p>
+    <p data-lang="zh">适配联想双环境架构（云上 Azure Databricks EDW + 私有 LUDP 数据湖，沈阳 DC / Reston DC）的智能数据分析 Agent，将自然语言转化为可信赖的业务洞察。</p>
+    <p data-lang="en">An intelligent data analysis Agent for Lenovo's hybrid architecture (Azure Databricks EDW + on-prem LUDP Data Lake, Shenyang DC / Reston DC), transforming natural language into trustworthy business insights.</p>
     <div class="hero-stack">
       <div class="chip">Azure Databricks</div>
-      <div class="chip">Apache Spark/Hive</div>
-      <div class="chip">Unity Catalog</div>
+      <div class="chip">LUDP Spark / Trino</div>
+      <div class="chip">Unity Catalog / LUDP Catalog</div>
       <div class="chip">Text-to-SQL</div>
       <div class="chip">Multi-Agent</div>
       <div class="chip"><span data-lang="zh">双环境适配</span><span data-lang="en">Hybrid Arch</span></div>
@@ -389,17 +389,17 @@
         <div class="phase-num">1</div>
         <h3><span data-lang="zh">双环境 Text-to-SQL 落地</span><span data-lang="en">Hybrid Text-to-SQL Deployment</span></h3>
         <div class="phase-sub"><span data-lang="zh">云上 Genie + 私有环境开源方案并行</span><span data-lang="en">Cloud: Genie | On-Prem: Open-Source Alternative</span></div>
-        <p data-lang="zh">云上基于 Databricks Genie 现有能力增强；私有数据中心部署开源 Text-to-SQL 方案（如 SQLCoder / DIN-SQL），统一语义层跨双环境共享。</p>
-        <p data-lang="en">Cloud: enhance Databricks Genie's existing capability. On-prem: deploy open-source Text-to-SQL (e.g. SQLCoder / DIN-SQL). A shared semantic layer bridges both environments.</p>
+        <p data-lang="zh">云上基于 Databricks Genie 现有能力增强；LUDP 私有环境（沈阳 DC）部署开源 Text-to-SQL 方案，对接 Trino（交互式查询）和 Spark（批量计算），统一语义层跨双环境共享。</p>
+        <p data-lang="en">Cloud: enhance Databricks Genie's existing capability. LUDP on-prem (Shenyang DC): deploy open-source Text-to-SQL connecting to Trino (interactive) and Spark (batch). A shared semantic layer bridges both environments.</p>
         <ul data-lang="zh">
-          <li><strong>云上：</strong>Genie 定制化增强，选 1-2 个种子团队试点</li>
-          <li><strong>私有：</strong>部署开源 Text-to-SQL + Spark/Hive 执行引擎，同样的语义标注复用</li>
+          <li><strong>云上（Databricks）：</strong>Genie 定制化增强，选 1-2 个种子团队试点高频 KPI 场景</li>
+          <li><strong>私有（LUDP / 沈阳 DC）：</strong>开源 Text-to-SQL + Trino / Spark SQL 执行引擎，同样的语义标注复用</li>
           <li>统一语义层——业务术语映射、字段口径、歧义消解，双环境共享一套定义</li>
           <li>50 个高频场景标注 + 置信度评分，低置信度主动提示用户确认</li>
         </ul>
         <ul data-lang="en">
-          <li><strong>Cloud:</strong> Genie customization, 1-2 seed teams for pilot</li>
-          <li><strong>On-prem:</strong> Open-source Text-to-SQL + Spark/Hive execution, reuse same semantic annotations</li>
+          <li><strong>Cloud (Databricks):</strong> Genie customization for high-frequency KPI scenarios, 1-2 seed teams</li>
+          <li><strong>On-prem (LUDP / Shenyang DC):</strong> Open-source Text-to-SQL + Trino / Spark SQL execution, reuse same semantic annotations</li>
           <li>Unified semantic layer &mdash; business term mapping, field calibers, ambiguity resolution shared across both environments</li>
           <li>50 high-frequency scenario annotations + confidence scoring with active user confirmation</li>
         </ul>
@@ -435,13 +435,13 @@
         <p data-lang="en">Supervisor orchestrates across both environments, auto-routing to cloud or on-prem specialized agents. Hybrid is not a constraint &mdash; it's a natural decoupling boundary.</p>
         <ul data-lang="zh">
           <li>Supervisor Agent 统一任务路由——根据数据源自动分发到云上或私有 Agent</li>
-          <li>结构化数据 Agent——云上走 Databricks SQL，私有走 Spark SQL / HiveQL</li>
+          <li>结构化数据 Agent——云上走 Databricks SQL，LUDP 私有环境走 Trino / Spark SQL</li>
           <li>文档 Agent——内部文档、政策法规、非结构化知识检索（环境无关）</li>
           <li>子 Agent 委派：复杂查询成功率 <strong>60% → 85%</strong>（Coding Agent V4 实测）</li>
         </ul>
         <ul data-lang="en">
           <li>Supervisor Agent routes tasks &mdash; auto-dispatches to cloud or on-prem agent by data source</li>
-          <li>Structured Data Agent &mdash; Databricks SQL (cloud) / Spark SQL + HiveQL (on-prem)</li>
+          <li>Structured Data Agent &mdash; Databricks SQL (cloud) / Trino + Spark SQL on LUDP (on-prem)</li>
           <li>Document Agent &mdash; internal docs, policies, unstructured knowledge (environment-agnostic)</li>
           <li>Sub-agent delegation: <strong>60% &rarr; 85% success rate</strong> on complex queries (proven in coding agent V4)</li>
         </ul>
@@ -464,8 +464,8 @@
       <div class="sec-card">
         <div class="sec-icon">&#x1f512;</div>
         <h4><span data-lang="zh">双环境权限透传</span><span data-lang="en">Hybrid Permission Pass-Through</span></h4>
-        <p data-lang="zh">云上继承 Unity Catalog 权限；私有环境对接 Apache Ranger / 企业 LDAP 权限体系。Agent 不存储凭证，每次查询实时校验——无权限提升。</p>
-        <p data-lang="en">Cloud: Unity Catalog permissions. On-prem: Apache Ranger / enterprise LDAP integration. Agent holds no credentials &mdash; real-time permission check on every query, no privilege escalation.</p>
+        <p data-lang="zh">云上继承 Unity Catalog 权限；LUDP 私有环境对接 Horizon / LUDP Catalog 权限体系 + 企业 LDAP 认证。Agent 不存储凭证，每次查询实时校验——无权限提升。</p>
+        <p data-lang="en">Cloud: Unity Catalog permissions. LUDP on-prem: Horizon / LUDP Catalog access control + enterprise LDAP authentication. Agent holds no credentials &mdash; real-time permission check on every query, no privilege escalation.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">&#x1f4cb;</div>
@@ -648,7 +648,7 @@
   <span class="kw">AND</span>  ship_month = <span style="color:#a5d6a7">'2026-01'</span>
 <span class="kw">GROUP BY</span> product_line
 <span class="kw">ORDER BY</span> total_units <span class="kw">DESC</span>;
-<span class="cm">-- Source: shipments.monthly_summary (Unity Catalog: pc_analytics)</span>
+<span class="cm">-- Source: Databricks Unity Catalog · pc_analytics.shipments.monthly_summary</span>
           </div>
 
           <div class="msg-result">
