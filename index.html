@@ -364,8 +364,9 @@
     <p data-lang="en">An intelligent data analysis Agent for Lenovo's hybrid architecture (Azure Databricks EDW + on-prem LUDP Data Lake, Shenyang DC / Reston DC), transforming natural language into trustworthy business insights.</p>
     <div class="hero-stack">
       <div class="chip">Azure Databricks</div>
-      <div class="chip">LUDP Spark / Trino</div>
+      <div class="chip">LUDP Spark / Trino / Doris</div>
       <div class="chip">Unity Catalog / LUDP Catalog</div>
+      <div class="chip">Dolphin Scheduler</div>
       <div class="chip">Text-to-SQL</div>
       <div class="chip">Multi-Agent</div>
       <div class="chip"><span data-lang="zh">双环境适配</span><span data-lang="en">Hybrid Arch</span></div>
@@ -393,13 +394,13 @@
         <p data-lang="en">Cloud: enhance Databricks Genie's existing capability. LUDP on-prem (Shenyang DC): deploy open-source Text-to-SQL connecting to Trino (interactive) and Spark (batch). A shared semantic layer bridges both environments.</p>
         <ul data-lang="zh">
           <li><strong>云上（Databricks）：</strong>Genie 定制化增强，选 1-2 个种子团队试点高频 KPI 场景</li>
-          <li><strong>私有（LUDP / 沈阳 DC）：</strong>开源 Text-to-SQL + Trino / Spark SQL 执行引擎，同样的语义标注复用</li>
+          <li><strong>私有（LUDP / 沈阳 DC）：</strong>开源 Text-to-SQL + Trino / Spark SQL 执行引擎，对接 LUDP Catalog 语义层，同样的标注定义复用</li>
           <li>统一语义层——业务术语映射、字段口径、歧义消解，双环境共享一套定义</li>
           <li>50 个高频场景标注 + 置信度评分，低置信度主动提示用户确认</li>
         </ul>
         <ul data-lang="en">
           <li><strong>Cloud (Databricks):</strong> Genie customization for high-frequency KPI scenarios, 1-2 seed teams</li>
-          <li><strong>On-prem (LUDP / Shenyang DC):</strong> Open-source Text-to-SQL + Trino / Spark SQL execution, reuse same semantic annotations</li>
+          <li><strong>On-prem (LUDP / Shenyang DC):</strong> Open-source Text-to-SQL + Trino / Spark SQL execution, integrating LUDP Catalog semantic layer, reusing same annotation definitions</li>
           <li>Unified semantic layer &mdash; business term mapping, field calibers, ambiguity resolution shared across both environments</li>
           <li>50 high-frequency scenario annotations + confidence scoring with active user confirmation</li>
         </ul>
@@ -464,14 +465,14 @@
       <div class="sec-card">
         <div class="sec-icon">&#x1f512;</div>
         <h4><span data-lang="zh">双环境权限透传</span><span data-lang="en">Hybrid Permission Pass-Through</span></h4>
-        <p data-lang="zh">云上继承 Unity Catalog 权限；LUDP 私有环境对接 Horizon / LUDP Catalog 权限体系 + 企业 LDAP 认证。Agent 不存储凭证，每次查询实时校验——无权限提升。</p>
-        <p data-lang="en">Cloud: Unity Catalog permissions. LUDP on-prem: Horizon / LUDP Catalog access control + enterprise LDAP authentication. Agent holds no credentials &mdash; real-time permission check on every query, no privilege escalation.</p>
+        <p data-lang="zh">云上继承 Unity Catalog 权限；LUDP 私有环境对接 Horizon / LUDP Catalog（数据目录与权限）+ DQS（数据质量）+ LeDOS（监控审计）+ 企业 LDAP 认证。Agent 不存储凭证，每次查询实时校验——无权限提升。</p>
+        <p data-lang="en">Cloud: Unity Catalog permissions. LUDP on-prem: Horizon / LUDP Catalog (data catalog &amp; access control) + DQS (data quality) + LeDOS (monitoring &amp; audit) + enterprise LDAP. Agent holds no credentials &mdash; real-time permission check on every query, no privilege escalation.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">&#x1f4cb;</div>
         <h4><span data-lang="zh">完整审计日志</span><span data-lang="en">Full Audit Trail</span></h4>
-        <p data-lang="zh">每一次查询、每一条生成的 SQL、每一个结果——都记录了用户身份、时间戳和数据血缘，完全可追溯。</p>
-        <p data-lang="en">Every query, every generated SQL, every result &mdash; logged with user identity, timestamp, and data lineage for complete traceability.</p>
+        <p data-lang="zh">每一次查询、每一条生成的 SQL、每一个结果——都记录了用户身份、时间戳和数据血缘。云上由 Unity Catalog 审计，LUDP 私有环境由 LeDOS 监控审计，完全可追溯。</p>
+        <p data-lang="en">Every query, every generated SQL, every result &mdash; logged with user identity, timestamp, and data lineage. Cloud audited via Unity Catalog; LUDP on-prem monitored by LeDOS for complete traceability.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">&#x26a0;</div>
