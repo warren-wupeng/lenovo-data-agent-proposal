@@ -360,14 +360,15 @@
     </div>
     <h1 data-lang="zh">让每个业务团队都拥有<br>自己的<em>数据分析师</em></h1>
     <h1 data-lang="en">Let Every Business Team Have Their Own <em>Data Analyst</em></h1>
-    <p data-lang="zh">基于 Databricks 构建的智能数据分析 Agent，将自然语言转化为可信赖的业务洞察，具备企业级安全与治理能力。</p>
-    <p data-lang="en">An intelligent data analysis Agent built on Databricks, transforming natural language into trustworthy business insights with enterprise-grade security and governance.</p>
+    <p data-lang="zh">适配双环境架构（云上 Azure Databricks + 私有数据中心 Apache 开源框架）的智能数据分析 Agent，将自然语言转化为可信赖的业务洞察。</p>
+    <p data-lang="en">An intelligent data analysis Agent for hybrid environments (Azure Databricks + on-prem Apache open-source stack), transforming natural language into trustworthy business insights.</p>
     <div class="hero-stack">
-      <div class="chip">Databricks Genie</div>
+      <div class="chip">Azure Databricks</div>
+      <div class="chip">Apache Spark/Hive</div>
       <div class="chip">Unity Catalog</div>
       <div class="chip">Text-to-SQL</div>
       <div class="chip">Multi-Agent</div>
-      <div class="chip"><span data-lang="zh">反馈闭环</span><span data-lang="en">Feedback Loop</span></div>
+      <div class="chip"><span data-lang="zh">双环境适配</span><span data-lang="en">Hybrid Arch</span></div>
     </div>
   </div>
 </section>
@@ -386,21 +387,21 @@
       <!-- Phase 1 -->
       <div class="phase-card">
         <div class="phase-num">1</div>
-        <h3><span data-lang="zh">Genie 定制化增强</span><span data-lang="en">Genie Customization & Enhancement</span></h3>
-        <div class="phase-sub"><span data-lang="zh">种子团队 + 深度语义标注</span><span data-lang="en">Seed Team + Deep Semantic Annotation</span></div>
-        <p data-lang="zh">基于 Databricks Genie 现有 Text-to-SQL 能力。不重复造轮子——聚焦行业特定的深度定制。</p>
-        <p data-lang="en">Build on Databricks Genie's existing Text-to-SQL capability. No reinventing the wheel &mdash; focus on domain-specific depth.</p>
+        <h3><span data-lang="zh">双环境 Text-to-SQL 落地</span><span data-lang="en">Hybrid Text-to-SQL Deployment</span></h3>
+        <div class="phase-sub"><span data-lang="zh">云上 Genie + 私有环境开源方案并行</span><span data-lang="en">Cloud: Genie | On-Prem: Open-Source Alternative</span></div>
+        <p data-lang="zh">云上基于 Databricks Genie 现有能力增强；私有数据中心部署开源 Text-to-SQL 方案（如 SQLCoder / DIN-SQL），统一语义层跨双环境共享。</p>
+        <p data-lang="en">Cloud: enhance Databricks Genie's existing capability. On-prem: deploy open-source Text-to-SQL (e.g. SQLCoder / DIN-SQL). A shared semantic layer bridges both environments.</p>
         <ul data-lang="zh">
-          <li>选取 1-2 个种子团队进行试点部署</li>
-          <li>标注 50 个高频查询场景的业务语义：字段定义、指标口径、常见歧义</li>
-          <li>实现置信度评分——低置信度结果主动提示用户确认</li>
-          <li>构建语义层：将业务术语映射到表结构和字段级血缘</li>
+          <li><strong>云上：</strong>Genie 定制化增强，选 1-2 个种子团队试点</li>
+          <li><strong>私有：</strong>部署开源 Text-to-SQL + Spark/Hive 执行引擎，同样的语义标注复用</li>
+          <li>统一语义层——业务术语映射、字段口径、歧义消解，双环境共享一套定义</li>
+          <li>50 个高频场景标注 + 置信度评分，低置信度主动提示用户确认</li>
         </ul>
         <ul data-lang="en">
-          <li>Select 1-2 seed teams for pilot deployment</li>
-          <li>Annotate top 50 high-frequency query scenarios with business semantics: field definitions, metric calibers, common ambiguities</li>
-          <li>Implement confidence scoring &mdash; low-confidence results actively prompt user confirmation</li>
-          <li>Build semantic layer: map business terms to table schemas and column-level lineage</li>
+          <li><strong>Cloud:</strong> Genie customization, 1-2 seed teams for pilot</li>
+          <li><strong>On-prem:</strong> Open-source Text-to-SQL + Spark/Hive execution, reuse same semantic annotations</li>
+          <li>Unified semantic layer &mdash; business term mapping, field calibers, ambiguity resolution shared across both environments</li>
+          <li>50 high-frequency scenario annotations + confidence scoring with active user confirmation</li>
         </ul>
       </div>
 
@@ -409,8 +410,8 @@
         <div class="phase-num">2</div>
         <h3><span data-lang="zh">记忆与反馈闭环</span><span data-lang="en">Memory & Feedback Loop</span></h3>
         <div class="phase-sub"><span data-lang="zh">来自 Coding Agent V4：对话压缩技术</span><span data-lang="en">From Coding Agent V4: Conversation Compression</span></div>
-        <p data-lang="zh">Agent 从纠正中学习，不再重复同样的错误。直接迁移生产级 Coding Agent 的验证技术。</p>
-        <p data-lang="en">The Agent learns from corrections and never repeats the same mistake. Directly transferring proven techniques from production coding agent.</p>
+        <p data-lang="zh">记忆层与 Supervisor 层做成统一服务，云上和私有环境共用同一套纠错和压缩机制——直接迁移生产级 Coding Agent 的验证技术。</p>
+        <p data-lang="en">Memory and Supervisor layers are environment-agnostic services shared across cloud and on-prem &mdash; directly transferring proven techniques from production coding agent.</p>
         <ul data-lang="zh">
           <li>用户纠错记忆——Agent 记录并避免重复错误</li>
           <li>对话压缩引擎：25 条消息阈值自动触发，<strong>token 降低 40-60%</strong>（V4 生产实测）</li>
@@ -430,18 +431,18 @@
         <div class="phase-num">3</div>
         <h3><span data-lang="zh">需求驱动的多 Agent 架构</span><span data-lang="en">Demand-Driven Multi-Agent</span></h3>
         <div class="phase-sub"><span data-lang="zh">Supervisor + 专业化 Agent</span><span data-lang="en">Supervisor + Specialized Agents</span></div>
-        <p data-lang="zh">只有真实使用数据支撑时才扩展架构。不是架构优先，而是需求优先。</p>
-        <p data-lang="en">Scale architecture only when real usage patterns justify it. Not architecture-first, but demand-first.</p>
+        <p data-lang="zh">Supervisor 统一编排，自动路由到云上或私有环境的专业 Agent。双环境不是限制，是天然的解耦边界。</p>
+        <p data-lang="en">Supervisor orchestrates across both environments, auto-routing to cloud or on-prem specialized agents. Hybrid is not a constraint &mdash; it's a natural decoupling boundary.</p>
         <ul data-lang="zh">
-          <li>Supervisor Agent 负责任务路由编排</li>
-          <li>结构化数据 Agent——SQL 生成、聚合分析、趋势分析</li>
-          <li>文档 Agent——内部文档、政策法规、非结构化知识检索</li>
+          <li>Supervisor Agent 统一任务路由——根据数据源自动分发到云上或私有 Agent</li>
+          <li>结构化数据 Agent——云上走 Databricks SQL，私有走 Spark SQL / HiveQL</li>
+          <li>文档 Agent——内部文档、政策法规、非结构化知识检索（环境无关）</li>
           <li>子 Agent 委派：复杂查询成功率 <strong>60% → 85%</strong>（Coding Agent V4 实测）</li>
         </ul>
         <ul data-lang="en">
-          <li>Supervisor Agent orchestrates task routing</li>
-          <li>Structured Data Agent &mdash; SQL generation, aggregation, trend analysis</li>
-          <li>Document Agent &mdash; internal docs, policies, unstructured knowledge retrieval</li>
+          <li>Supervisor Agent routes tasks &mdash; auto-dispatches to cloud or on-prem agent by data source</li>
+          <li>Structured Data Agent &mdash; Databricks SQL (cloud) / Spark SQL + HiveQL (on-prem)</li>
+          <li>Document Agent &mdash; internal docs, policies, unstructured knowledge (environment-agnostic)</li>
           <li>Sub-agent delegation: <strong>60% &rarr; 85% success rate</strong> on complex queries (proven in coding agent V4)</li>
         </ul>
       </div>
@@ -462,9 +463,9 @@
     <div class="security-grid">
       <div class="sec-card">
         <div class="sec-icon">&#x1f512;</div>
-        <h4><span data-lang="zh">Unity Catalog 权限透传</span><span data-lang="en">Unity Catalog Pass-Through</span></h4>
-        <p data-lang="zh">Agent 继承用户现有的 Unity Catalog 权限。无权限提升——你只能看到你被授权看到的数据，不多也不少。</p>
-        <p data-lang="en">Agent inherits user's existing Unity Catalog permissions. No privilege escalation &mdash; you see what you're authorized to see, nothing more.</p>
+        <h4><span data-lang="zh">双环境权限透传</span><span data-lang="en">Hybrid Permission Pass-Through</span></h4>
+        <p data-lang="zh">云上继承 Unity Catalog 权限；私有环境对接 Apache Ranger / 企业 LDAP 权限体系。Agent 不存储凭证，每次查询实时校验——无权限提升。</p>
+        <p data-lang="en">Cloud: Unity Catalog permissions. On-prem: Apache Ranger / enterprise LDAP integration. Agent holds no credentials &mdash; real-time permission check on every query, no privilege escalation.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">&#x1f4cb;</div>
