@@ -222,6 +222,18 @@
   .demo .section-title { color: var(--white); }
   .demo .section-desc { color: var(--gray-400); }
 
+  .golden-queries {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 32px; max-width: 680px; margin-left: auto; margin-right: auto;
+  }
+  .gq-btn {
+    padding: 8px 16px; border-radius: 20px; font-size: 13px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    color: var(--gray-300); cursor: default; transition: all 0.2s;
+  }
+  .gq-btn:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+  .gq-btn.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+
   .chat-window {
     max-width: 680px; margin: 0 auto;
     background: var(--navy-light); border-radius: 16px;
@@ -262,15 +274,31 @@
   .msg-user .msg-label { color: rgba(255,255,255,0.7); }
   .msg-agent .msg-label { color: var(--orange-light); }
 
+  .sql-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--gray-400); cursor: pointer;
+    margin-top: 10px; padding: 4px 0; user-select: none;
+  }
+  .sql-toggle:hover { color: var(--gray-300); }
+  .sql-toggle svg { width: 14px; height: 14px; }
+
   .msg-sql {
     background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px 16px;
     font-family: "SF Mono", "Cascadia Code", "Consolas", monospace;
-    font-size: 12px; color: var(--gray-300); margin-top: 10px;
+    font-size: 12px; color: var(--gray-300); margin-top: 8px;
     border: 1px solid rgba(255,255,255,0.05); overflow-x: auto;
+    position: relative;
   }
   .msg-sql .kw { color: var(--blue-light); }
   .msg-sql .fn { color: var(--orange-light); }
   .msg-sql .cm { color: var(--gray-500); font-style: italic; }
+  .sql-copy {
+    position: absolute; top: 8px; right: 8px;
+    background: none; border: none; color: var(--gray-500);
+    cursor: pointer; padding: 2px; transition: color 0.2s;
+  }
+  .sql-copy:hover { color: var(--gray-300); }
+  .sql-copy svg { width: 14px; height: 14px; }
 
   .confidence {
     display: inline-flex; align-items: center; gap: 6px;
@@ -296,6 +324,41 @@
     color: var(--gray-300);
   }
   .msg-result tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ---- BAR CHART ---- */
+  .chart-container { margin-top: 12px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); }
+  .chart-title { font-size: 12px; color: var(--gray-400); margin-bottom: 12px; text-align: center; }
+  .chart-bars { display: flex; align-items: flex-end; gap: 16px; height: 140px; justify-content: center; padding: 0 12px; }
+  .chart-bar-group { display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 80px; }
+  .chart-bar {
+    width: 100%; border-radius: 4px 4px 0 0; transition: height 0.8s ease;
+    min-height: 4px;
+  }
+  .chart-bar.b1 { background: linear-gradient(180deg, var(--blue-light), var(--blue)); }
+  .chart-bar.b2 { background: linear-gradient(180deg, var(--orange-light), var(--orange)); }
+  .chart-bar.b3 { background: linear-gradient(180deg, #34d399, var(--green)); }
+  .chart-bar.b4 { background: linear-gradient(180deg, var(--gray-400), var(--gray-500)); }
+  .chart-bar-label { font-size: 11px; color: var(--gray-400); margin-top: 6px; text-align: center; }
+  .chart-bar-val { font-size: 11px; color: var(--gray-300); margin-bottom: 4px; font-weight: 600; }
+
+  /* ---- NUMBER VIZ ---- */
+  .number-viz { text-align: center; padding: 20px; margin-top: 12px; }
+  .number-viz .nv-label { font-size: 13px; color: var(--gray-400); margin-bottom: 4px; }
+  .number-viz .nv-value { font-size: 36px; font-weight: 800; color: var(--blue-light); }
+
+  /* ---- LIVE LINK ---- */
+  .live-link {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-top: 32px; max-width: 680px; margin-left: auto; margin-right: auto;
+  }
+  .live-link a {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-light));
+    color: var(--white); text-decoration: none; font-size: 14px; font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .live-link a:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(249,115,22,0.3); }
 
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
   .msg:nth-child(1) { animation-delay: 0.3s; }
@@ -591,54 +654,47 @@
     <div class="section-label"><span data-lang="zh">交互演示</span><span data-lang="en">Interactive Demo</span></div>
     <h2 class="section-title"><span data-lang="zh">它看起来是这样的</span><span data-lang="en">What It Looks Like</span></h2>
     <p class="section-desc">
-      <span data-lang="zh">模拟对话，展示 Agent 的澄清追问、SQL 生成与置信度评分结果。</span>
-      <span data-lang="en">A simulated conversation showing the Agent's clarification, SQL generation, and confidence-scored results.</span>
+      <span data-lang="zh">Golden Queries 一键触发，自然语言 &rarr; SQL &rarr; 可视化图表 &rarr; 置信度评分，全流程透明。</span>
+      <span data-lang="en">Golden Queries trigger instantly: natural language &rarr; SQL &rarr; chart visualization &rarr; confidence scoring, fully transparent.</span>
     </p>
+
+    <!-- Golden Queries -->
+    <div class="golden-queries">
+      <div class="gq-btn active"><span data-lang="zh">上个月各产品线出货量？</span><span data-lang="en">Last month's shipments by product line?</span></div>
+      <div class="gq-btn"><span data-lang="zh">Yoga 系列同比增长趋势</span><span data-lang="en">Yoga YoY growth trend</span></div>
+      <div class="gq-btn"><span data-lang="zh">各区域营收 Top 5</span><span data-lang="en">Revenue Top 5 by region</span></div>
+      <div class="gq-btn"><span data-lang="zh">本季度库存周转率</span><span data-lang="en">Inventory turnover this quarter</span></div>
+      <div class="gq-btn"><span data-lang="zh">渠道商出货占比分析</span><span data-lang="en">Channel partner share analysis</span></div>
+    </div>
 
     <div class="chat-window">
       <div class="chat-header">
         <div class="chat-dot"></div>
-        <span><span data-lang="zh">联想数据 Agent — PC 事业部</span><span data-lang="en">Lenovo Data Agent &mdash; PC Business Unit</span></span>
+        <span><span data-lang="zh">联想数据分析 Agent</span><span data-lang="en">Lenovo Data Analysis Agent</span></span>
       </div>
       <div class="chat-body">
 
         <!-- User -->
         <div class="msg msg-user">
-          <div class="msg-label"><span data-lang="zh">用户 · 销售运营</span><span data-lang="en">User · Sales Ops</span></div>
-          <span data-lang="zh">上个月 PC 出货量怎么样？</span>
-          <span data-lang="en">How did PC shipments look last month?</span>
-        </div>
-
-        <!-- Agent clarification -->
-        <div class="msg msg-agent">
-          <div class="msg-label">Agent</div>
-          <span data-lang="zh">为了给您准确的数据，我需要确认几点：<br><br>
-          <strong>1.</strong> "上个月"——指 2026 年 1 月，对吗？<br>
-          <strong>2.</strong> 哪些产品线？全部 PC，还是特定系列（ThinkPad / IdeaPad / Yoga）？<br>
-          <strong>3.</strong> 哪个指标——出货量（台）、营收，还是零售渗透率？<br>
-          <strong>4.</strong> 范围——全球还是特定区域（中国 / AP / EMEA / NA）？</span>
-          <span data-lang="en">I want to make sure I give you the right numbers. A few clarifications:
-          <br><br>
-          <strong>1.</strong> "Last month" &mdash; January 2026, correct?<br>
-          <strong>2.</strong> Which product lines? All PC, or specific (ThinkPad / IdeaPad / Yoga)?<br>
-          <strong>3.</strong> Which metric &mdash; units shipped, revenue, or sell-through?<br>
-          <strong>4.</strong> Scope &mdash; global or specific region (China / AP / EMEA / NA)?</span>
-        </div>
-
-        <!-- User reply -->
-        <div class="msg msg-user">
           <div class="msg-label"><span data-lang="zh">用户</span><span data-lang="en">User</span></div>
-          <span data-lang="zh">1 月，全部 PC，出货台数，中国区。</span>
-          <span data-lang="en">January, all PC lines, units shipped, China region.</span>
+          <span data-lang="zh">上个月各产品线出货量怎么样？</span>
+          <span data-lang="en">How did shipments look last month by product line?</span>
         </div>
 
-        <!-- Agent SQL + result -->
+        <!-- Agent SQL + chart + result -->
         <div class="msg msg-agent">
           <div class="msg-label">Agent</div>
-          <span data-lang="zh">收到，以下是查询结果：</span>
-          <span data-lang="en">Got it. Here's what I found:</span>
+          <span data-lang="zh">这个查询统计了 2026 年 1 月中国区各产品线的出货量。根据业务定义，出货量 = 工厂出库量（units_shipped），数据来源已确认为中国仓。</span>
+          <span data-lang="en">This query retrieves January 2026 shipments by product line for the China region. By business definition, units shipped = factory ship-out, confirmed from China warehouse data.</span>
 
-          <div class="msg-sql">
+          <!-- SQL Toggle -->
+          <div class="sql-toggle" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span data-lang="zh">查看 SQL</span><span data-lang="en">View SQL</span>
+          </div>
+
+          <div class="msg-sql" style="display:none">
+            <button class="sql-copy" title="复制 SQL"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
 <span class="kw">SELECT</span> product_line,
        <span class="fn">SUM</span>(units_shipped) <span class="kw">AS</span> total_units,
        <span class="fn">ROUND</span>(<span class="fn">SUM</span>(units_shipped) * 100.0 /
@@ -649,25 +705,34 @@
   <span class="kw">AND</span>  ship_month = <span style="color:#a5d6a7">'2026-01'</span>
 <span class="kw">GROUP BY</span> product_line
 <span class="kw">ORDER BY</span> total_units <span class="kw">DESC</span>;
-<span class="cm">-- Source: Databricks Unity Catalog · pc_analytics.shipments.monthly_summary</span>
+<span class="cm">-- Source: Unity Catalog &middot; pc_analytics.shipments.monthly_summary</span>
           </div>
 
-          <div class="msg-result">
-            <table>
-              <thead>
-                <tr>
-                  <th><span data-lang="zh">产品线</span><span data-lang="en">Product Line</span></th>
-                  <th><span data-lang="zh">出货台数</span><span data-lang="en">Units Shipped</span></th>
-                  <th><span data-lang="zh">占比</span><span data-lang="en">Share</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>ThinkPad</td><td>182,400</td><td>38.2%</td></tr>
-                <tr><td>IdeaPad</td><td>156,800</td><td>32.8%</td></tr>
-                <tr><td>Yoga</td><td>89,300</td><td>18.7%</td></tr>
-                <tr><td><span data-lang="zh">其他</span><span data-lang="en">Others</span></td><td>49,100</td><td>10.3%</td></tr>
-              </tbody>
-            </table>
+          <!-- Bar Chart -->
+          <div class="chart-container">
+            <div class="chart-title"><span data-lang="zh">2026 年 1 月中国区 PC 出货量（千台）</span><span data-lang="en">Jan 2026 China PC Shipments (K units)</span></div>
+            <div class="chart-bars">
+              <div class="chart-bar-group">
+                <div class="chart-bar-val">182.4K</div>
+                <div class="chart-bar b1" style="height: 100%;"></div>
+                <div class="chart-bar-label">ThinkPad</div>
+              </div>
+              <div class="chart-bar-group">
+                <div class="chart-bar-val">156.8K</div>
+                <div class="chart-bar b2" style="height: 86%;"></div>
+                <div class="chart-bar-label">IdeaPad</div>
+              </div>
+              <div class="chart-bar-group">
+                <div class="chart-bar-val">89.3K</div>
+                <div class="chart-bar b3" style="height: 49%;"></div>
+                <div class="chart-bar-label">Yoga</div>
+              </div>
+              <div class="chart-bar-group">
+                <div class="chart-bar-val">49.1K</div>
+                <div class="chart-bar b4" style="height: 27%;"></div>
+                <div class="chart-bar-label"><span data-lang="zh">其他</span><span data-lang="en">Others</span></div>
+              </div>
+            </div>
           </div>
 
           <div class="confidence high">
@@ -684,11 +749,28 @@
           <span data-lang="en">Compare with last January. Which line grew the most?</span>
         </div>
 
-        <!-- Agent response -->
+        <!-- Agent response with table -->
         <div class="msg msg-agent">
           <div class="msg-label">Agent</div>
           <span data-lang="zh">2026 年 1 月 vs 2025 年 1 月，中国区对比：</span>
           <span data-lang="en">Comparing Jan 2026 vs Jan 2025, China region:</span>
+
+          <div class="sql-toggle" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span data-lang="zh">查看 SQL</span><span data-lang="en">View SQL</span>
+          </div>
+
+          <div class="msg-sql" style="display:none">
+            <button class="sql-copy" title="复制 SQL"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+<span class="kw">SELECT</span> a.product_line,
+       a.total_units <span class="kw">AS</span> units_2026,
+       b.total_units <span class="kw">AS</span> units_2025,
+       <span class="fn">ROUND</span>((a.total_units - b.total_units) * 100.0 / b.total_units, 1) <span class="kw">AS</span> yoy_pct
+<span class="kw">FROM</span>   monthly_agg a <span class="kw">JOIN</span> monthly_agg b
+  <span class="kw">ON</span> a.product_line = b.product_line
+<span class="kw">WHERE</span>  a.ship_month = <span style="color:#a5d6a7">'2026-01'</span> <span class="kw">AND</span> b.ship_month = <span style="color:#a5d6a7">'2025-01'</span>
+<span class="kw">ORDER BY</span> yoy_pct <span class="kw">DESC</span>;
+          </div>
 
           <div class="msg-result" style="margin-top: 12px;">
             <table>
@@ -720,6 +802,15 @@
         </div>
 
       </div>
+    </div>
+
+    <!-- Live Agent Link -->
+    <div class="live-link">
+      <a href="https://data-analysis-agent-warren.fly.dev/" target="_blank" rel="noopener">
+        <span data-lang="zh">&#x1f680; 查看实际运行版本</span>
+        <span data-lang="en">&#x1f680; Try the Live Agent</span>
+        &rarr;
+      </a>
     </div>
 
   </div>
